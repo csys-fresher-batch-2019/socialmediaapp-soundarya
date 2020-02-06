@@ -1,10 +1,13 @@
-package com.chainsys.socialmediaapplication.userlist;
+package com.chainsys.socialmediaapplication.dao;
+
+import com.chainsys.socialmediaapplication.daoimpl.UserListClass;
+
 //import java.util.List;
 public interface UserListDAO {
 	//inserting new users
 	void insertUsers(UserListClass insert);
 	//select user_name,gender from user_list where city='madurai';
-	String[] searchByCity(String city);
+	//String[] searchByCity(String city);
 	// select * from user_list where user_name like 'a%';
     String[] searchByCityAndName(String a,String city);
 	// select * from user_list where user_name like '%mala%';

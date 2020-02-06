@@ -1,4 +1,6 @@
-package com.chainsys.socialmediaapplication.posts;
+package com.chainsys.socialmediaapplication.dao;
+
+import com.chainsys.socialmediaapplication.daoimpl.PostsClass;
 
 public interface PostsDAO {
 
@@ -15,4 +17,9 @@ public interface PostsDAO {
     //displaying the user name and posted status for the particular user
     //select u.user_name,p.post_type,p.caption,p.date_posted from user_list u inner join posts p on u.email=p.email;
 	public String[] display();
+	
+	public String[] displayFriendsPost(String req,String acp);
+	
+	public String[] displayPublicPost( String acp);
+
 }

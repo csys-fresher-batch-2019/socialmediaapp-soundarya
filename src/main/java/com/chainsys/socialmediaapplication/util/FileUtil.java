@@ -1,4 +1,4 @@
-package com.chainsys.socialmediaapplication.userlist;
+package com.chainsys.socialmediaapplication.util;
 
 import java.io.IOException;
 import java.nio.file.Files;

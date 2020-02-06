@@ -1,4 +1,6 @@
-package com.chainsys.socialmediaapplication.comments;
+package com.chainsys.socialmediaapplication.dao;
+
+import com.chainsys.socialmediaapplication.daoimpl.CommentsClass;
 
 public interface CommentsDAO {
 	//posting comments

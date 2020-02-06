@@ -1,4 +1,7 @@
-package com.chainsys.socialmediaapplication.friendrequest;
+package com.chainsys.socialmediaapplication.dao;
+
+import com.chainsys.socialmediaapplication.daoimpl.FriendRequestClass;
+
 //import java.util.List;
 public interface FriendRequestDAO {
 	//Insert friend request details
@@ -6,11 +9,13 @@ public interface FriendRequestDAO {
      void insertRequest(FriendRequestClass ins);
 	
 	//select * from friend_request where (requestor = 'sound@gmail.com') and current_status = 'accepted';
-	String[] getFriendrequest(String requestor,String currentStatus);
+	String[] getFriendrequest(String requestor,String s);
 	
 	//select * from friend_request where requestor = 'sound@gmail.com';
 	String[] getRequestorList(String requestor);
 	
+	String[] getAcceptorList(String requestor);
+
 	//update friend_request set current_status='accepted' where requestor=? and acceptor=?;
 	void updateStatus(String currentStatus,String requestor,String acceptor);
 	

@@ -2,12 +2,12 @@ package com.chainsys.socialmediaapplication.friendrequest;
 
 import com.chainsys.socialmediaapplication.daoimpl.FriendRequestClass;
 
-public class TestGetRequestorList {
+public class TestGetAcceptorList {
 
 	public static void main(String[] args) {
 		FriendRequestClass getreq=new FriendRequestClass();
-		String requestor="sound@gmail.com";
-		getreq.getRequestorList(requestor);
+		String acceptor="sound@gmail.com";
+		getreq.getAcceptorList(acceptor);
 	}
 
 }

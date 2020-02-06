@@ -2,18 +2,21 @@ package com.chainsys.socialmediaapplication.userlist;
 
 import java.util.Scanner;
 
-import com.chainsys.socialmediaapplication.login.LoginClass;
+import com.chainsys.socialmediaapplication.daoimpl.Logger;
+//import com.chainsys.socialmediaapplication.daoimpl.LoginClass;
+import com.chainsys.socialmediaapplication.daoimpl.UserListClass;
 
 public class UpdatePassword {
-
+	 private static final Logger LOGGER = Logger.getInstance();
 	public static void main(String[] args) {
+		@SuppressWarnings("resource")
 		Scanner s=new Scanner(System.in);
 		UserListClass update=new UserListClass();
-		System.out.println("Ënter email:");
+		LOGGER.debug("Ënter email:");
 		String email=s.nextLine();
-		System.out.println("Ënter old password:");
+		LOGGER.debug("Ënter old password:");
 		String op=s.nextLine();
-		System.out.println("Ënter new password:");
+		LOGGER.debug("Ënter new password:");
 		String np=s.nextLine();
 		update.updatePassword(email,op, np);
 	}

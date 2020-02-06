@@ -1,6 +1,6 @@
 package com.chainsys.socialmediaapplication.friendrequest;
 
-import com.chainsys.socialmediaapplication.friendrequest.FriendRequestClass;
+import com.chainsys.socialmediaapplication.daoimpl.FriendRequestClass;
 
 public class TestGetFriendRequest {
 

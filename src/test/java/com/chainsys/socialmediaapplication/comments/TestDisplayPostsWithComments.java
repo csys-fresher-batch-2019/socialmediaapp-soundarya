@@ -1,6 +1,6 @@
 package com.chainsys.socialmediaapplication.comments;
 
-import com.chainsys.socialmediaapplication.comments.CommentsClass;
+import com.chainsys.socialmediaapplication.daoimpl.CommentsClass;
 
 public class TestDisplayPostsWithComments {
 

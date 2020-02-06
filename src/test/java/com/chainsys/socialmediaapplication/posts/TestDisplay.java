@@ -1,6 +1,6 @@
 package com.chainsys.socialmediaapplication.posts;
 
-import com.chainsys.socialmediaapplication.posts.PostsClass;
+import com.chainsys.socialmediaapplication.daoimpl.PostsClass;
 
 public class TestDisplay {
 

@@ -1,6 +1,6 @@
 package com.chainsys.socialmediaapplication.userlist;
 
-import com.chainsys.socialmediaapplication.userlist.UserListClass;
+import com.chainsys.socialmediaapplication.daoimpl.UserListClass;
 
 public class TestNameLikeClass {
 
