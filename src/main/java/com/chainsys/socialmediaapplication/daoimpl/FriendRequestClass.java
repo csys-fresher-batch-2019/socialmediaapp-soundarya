@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.chainsys.socialmediaapplication.util.ConnectionUtil;
 
@@ -67,7 +69,8 @@ public class FriendRequestClass {
 	}
 	
 	
-	public String[] getFriendrequest(String requestor,String currentStatus){
+	public List<FriendRequestClass> getFriendrequest(String requestor,String currentStatus){
+		List<FriendRequestClass> l = new ArrayList<FriendRequestClass>();
 		String sql = "select * from friend_request where requestor = '"+requestor+"' and current_status = '"+currentStatus+"'";
 		try(Connection con=ConnectionUtil.conMethod();
 			    Statement stmt=con.createStatement();
@@ -83,6 +86,13 @@ public class FriendRequestClass {
 				LOGGER.debug(acp);
 				String status=rs.getString("current_status");
 				LOGGER.debug(status);
+				
+				FriendRequestClass f=new FriendRequestClass();
+				f.setRequestor(req);
+				f.setAcceptor(acp);
+				f.setCurrentStatus(status);
+				
+				l.add(f);
 			}
 		    LOGGER.debug(sql);
 		}
@@ -90,11 +100,13 @@ public class FriendRequestClass {
 		{
 			e.printStackTrace();
 		}
-		return null;
+		return l;
+		
 		
 	}
 
-	public String[] getRequestorList(String requestor){
+	public List<FriendRequestClass> getRequestorList(String requestor){
+		List<FriendRequestClass> l = new ArrayList<FriendRequestClass>();
 		String sql = "select * from friend_request where requestor = '"+requestor+"'";
 		try(Connection con=ConnectionUtil.conMethod();
 			    Statement stmt=con.createStatement();
@@ -110,6 +122,14 @@ public class FriendRequestClass {
 				LOGGER.debug(acp);
 				String status=rs.getString("current_status");
 				LOGGER.debug(status);
+				
+				
+				FriendRequestClass f=new FriendRequestClass();
+				f.setRequestor(req);
+				f.setAcceptor(acp);
+				f.setCurrentStatus(status);
+				
+				l.add(f);
 			}
 		    LOGGER.debug(sql);
 		}
@@ -117,10 +137,12 @@ public class FriendRequestClass {
 		{
 			e.printStackTrace();
 		}
-		return null;
+		return l;
 	}
+	//request for me
 	
-	public String[] getAcceptorList(String acceptor){
+	public List<FriendRequestClass> getAcceptorList(String acceptor){
+		List<FriendRequestClass> l = new ArrayList<FriendRequestClass>();
 		String sql = "select * from friend_request where acceptor = '"+acceptor+"'";
 		try (Connection con=ConnectionUtil.conMethod();
 			    Statement stmt=con.createStatement();
@@ -136,6 +158,14 @@ public class FriendRequestClass {
 				LOGGER.debug(req);
 				String status=rs.getString("current_status");
 				LOGGER.debug(status);
+				
+				FriendRequestClass f=new FriendRequestClass();
+				f.setRequestor(req);
+				f.setAcceptor(acp);
+				f.setCurrentStatus(status);
+				
+				l.add(f);
+				
 			}
 		    LOGGER.debug(sql);
 		}
@@ -143,7 +173,7 @@ public class FriendRequestClass {
 		{
 			e.printStackTrace();
 		}
-		return null;
+		return l;
 	}
 
 	public void updateStatus(String currentStatus,String requestor,String acceptor)

@@ -1,5 +1,6 @@
 package com.chainsys.socialmediaapplication.posts;
 
+import java.util.List;
 import java.util.Scanner;
 
 import com.chainsys.socialmediaapplication.daoimpl.Logger;
@@ -13,7 +14,12 @@ public class TestDisplayPublicPost {
 		Scanner s=new Scanner(System.in);
 		LOGGER.debug("Enter Acceptor email:");
 		String acceptor=s.nextLine();
-		display.displayPublicPost(acceptor);
+		
+		List<PostsClass> list = display.displayPublicPost(acceptor);
+		
+		for (PostsClass postsClass : list) {
+			System.out.println(postsClass.toString2());
+		}
 	}
 
 }

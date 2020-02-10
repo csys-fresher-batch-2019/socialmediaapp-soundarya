@@ -1,5 +1,6 @@
 package com.chainsys.socialmediaapplication.posts;
 
+import java.util.List;
 import java.util.Scanner;
 
 import com.chainsys.socialmediaapplication.daoimpl.Logger;
@@ -16,7 +17,13 @@ public class TestDisplayFriendPost {
 		s.nextLine();
 		LOGGER.debug("Enter Acceptor email:");
 		String acceptor=s.nextLine();
-		display.displayFriendsPost(requestor, acceptor);
+		
+		
+		List<PostsClass> list = display.displayFriendsPost(requestor, acceptor);
+		
+		for (PostsClass postsClass : list) {
+			System.out.println(postsClass.toString2());
+		}
 	}
 
 }

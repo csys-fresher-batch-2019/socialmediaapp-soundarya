@@ -1,18 +1,51 @@
 package com.chainsys.socialmediaapplication.daoimpl;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.chainsys.socialmediaapplication.util.ConnectionUtil;
 
 public class CommentsClass {
 	 private static final Logger LOGGER = Logger.getInstance();
+	 private String userName;
+	 private String caption;
 	 private  int cmtPostId;
 	 private String cmtEmail;
 	 private String cmts;
-	
+	 private String cmtDate1;
+
+		public String getCmtDate1() {
+		return cmtDate1;
+	}
+
+
+	public void setCmtDate1(String cmtDate1) {
+		this.cmtDate1 = cmtDate1;
+	}
+
+
+		public String getUserName() {
+			return userName;
+		}
+
+
+		public void setUserName(String userName) {
+			this.userName = userName;
+		}
+		public String getCaption() {
+			return caption;
+		}
+
+
+		public void setCaption(String caption) {
+			this.caption = caption;
+		}
+
 	
 	public int getCmtPostId() {
 		return cmtPostId;
@@ -51,7 +84,12 @@ public class CommentsClass {
 
 	@Override
 	public String toString() {
-		return "CommentsClass [cmtPostId=" + cmtPostId + ", cmtEmail=" + cmtEmail + ", cmts=" + cmts + "]";
+		return "CommentsClass [userName=" + userName + ", caption=" + caption + ", cmtPostId=" + cmtPostId
+				+ ", cmtEmail=" + cmtEmail + ", cmts=" + cmts + ", cmtDate=" + cmtDate1 + "]";
+	}
+	public String toString1() {
+		return "CommentsClass [userName=" + userName + ", caption=" + caption 
+				+ ", cmtEmail=" + cmtEmail + ", cmts=" + cmts + ", cmtDate1=" + cmtDate1 + "]";
 	}
 	
 	
@@ -76,11 +114,13 @@ public class CommentsClass {
 			e.printStackTrace();
 		}
 	}
-	public String[] displayPostsWithComments()
+	public List<CommentsClass> displayPostsWithComments()
 	{
-		String sql = "select u.user_name,p.caption,c.cmts,c.cmt_email from user_list u,posts p,comments c where u.email=p.email and p.post_id=c.cmt_post_id";
+		List<CommentsClass> list = new ArrayList<CommentsClass>();
+		String sql = "select u.user_name,p.caption,c.cmts,c.cmt_email,c.cmt_date from user_list u,posts p,comments c where u.email=p.email and p.post_id=c.cmt_post_id";
 		try (Connection con=ConnectionUtil.conMethod();
 			    Statement stmt=con.createStatement();ResultSet rs=stmt.executeQuery(sql)){
+			
 			
 		    
 		    LOGGER.debug(sql);
@@ -88,13 +128,22 @@ public class CommentsClass {
 		    while(rs.next())
 			{
 				String username=rs.getString("user_name");
-				LOGGER.debug(username);
+				
 				String caption=rs.getString("caption");
-				LOGGER.debug(caption);
+				
 				String cmts=rs.getString("cmts");
-				LOGGER.debug(cmts);
+				
 				String cmtEmail=rs.getString("cmt_email");
-				LOGGER.debug(cmtEmail);
+				
+				String cmtDate1=rs.getString("cmt_date");
+				
+				CommentsClass c = new CommentsClass();
+				c.setUserName(username);
+				c.setCaption(caption);
+				c.setCmts(cmts);
+				c.setCmtEmail(cmtEmail);
+				c.setCmtDate1(cmtDate1);;
+				list.add(c);
 			}
 		    
 		}
@@ -103,9 +152,23 @@ public class CommentsClass {
 			e.printStackTrace();
 		}		
 		
-		return null;
+		return list;
 		
 	}
+
+
+	public String getCmtDate() {
+		return cmtDate1;
+	}
+
+
+	public void setCmtDate(String cmtDate1) {
+		this.cmtDate1 = cmtDate1;
+	}
+
+
+	
+
 
 	
 

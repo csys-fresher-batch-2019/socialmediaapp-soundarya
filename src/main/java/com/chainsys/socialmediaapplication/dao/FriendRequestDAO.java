@@ -1,6 +1,9 @@
 package com.chainsys.socialmediaapplication.dao;
 
+import java.util.List;
+
 import com.chainsys.socialmediaapplication.daoimpl.FriendRequestClass;
+import com.chainsys.socialmediaapplication.daoimpl.UserListClass;
 
 //import java.util.List;
 public interface FriendRequestDAO {
@@ -9,12 +12,12 @@ public interface FriendRequestDAO {
      void insertRequest(FriendRequestClass ins);
 	
 	//select * from friend_request where (requestor = 'sound@gmail.com') and current_status = 'accepted';
-	String[] getFriendrequest(String requestor,String s);
+     List<FriendRequestClass> getFriendrequest(String requestor,String s);
 	
 	//select * from friend_request where requestor = 'sound@gmail.com';
-	String[] getRequestorList(String requestor);
+     List<FriendRequestClass> getRequestorList(String requestor);
 	
-	String[] getAcceptorList(String requestor);
+     List<FriendRequestClass> getAcceptorList(String requestor);
 
 	//update friend_request set current_status='accepted' where requestor=? and acceptor=?;
 	void updateStatus(String currentStatus,String requestor,String acceptor);

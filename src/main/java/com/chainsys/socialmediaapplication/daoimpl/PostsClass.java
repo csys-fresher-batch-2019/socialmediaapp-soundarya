@@ -1,21 +1,35 @@
 package com.chainsys.socialmediaapplication.daoimpl;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.chainsys.socialmediaapplication.dao.PostsDAO;
 import com.chainsys.socialmediaapplication.util.ConnectionUtil;
 
 public class PostsClass  implements PostsDAO{
 	 private static final Logger LOGGER = Logger.getInstance();
+	 private String userName;
 	 private int postId;
 	 private String email;
 	 private String postType;
 	 private String caption;
 	 private String viewability;
+	 private String datePosted;
+	 
+	 public String getUserName() {
+			return userName;
+		}
+
+		public void setUserName(String userName) {
+			this.userName = userName;
+		}
+
 	public int getPostId() {
 		return postId;
 	}
@@ -76,13 +90,13 @@ public class PostsClass  implements PostsDAO{
 
 
 
-	public LocalDate getDatePosted() {
+	public String getDatePosted() {
 		return datePosted;
 	}
 
 
 
-	public void setDatePosted(LocalDate datePosted) {
+	public void setDatePosted(String datePosted) {
 		this.datePosted = datePosted;
 	}
 
@@ -93,15 +107,23 @@ public class PostsClass  implements PostsDAO{
 	}
 
 
-	LocalDate datePosted;
+	
 	
 	@Override
 	public String toString() {
-		return "PostsClass [postId=" + postId + ", email=" + email + ", postType=" + postType + ", caption=" + caption
-				+ ", viewability=" + viewability + ", datePosted=" + datePosted + "]";
+		return "PostsClass [userName=" + userName + ", postId=" + postId + ", email=" + email + ", postType=" + postType
+				+ ", caption=" + caption + ", viewability=" + viewability + ", datePosted=" + datePosted + "]";
 	}
 	
+	public String toString1() {
+		return "PostsClass [userName=" + userName + ",  postType=" + postType
+				+ ", caption=" + caption + ",  datePosted=" + datePosted + "]";
+	}
 
+	public String toString2() {
+		return "PostsClass [ postId=" + postId + ", email=" + email + ", postType=" + postType
+				+ ", caption=" + caption + ",  datePosted=" + datePosted + "]";
+	}
 
 	public int NoOfPosts(String email)
 	{
@@ -169,7 +191,8 @@ public class PostsClass  implements PostsDAO{
 		
 	}
 
-	public String[] display() {
+	public List<PostsClass> display() {
+		List<PostsClass> list = new ArrayList<PostsClass>();
 		String sql = "select u.user_name,p.post_type,p.caption,p.date_posted from user_list u inner join posts p on u.email=p.email ";
 		try(Connection con=ConnectionUtil.conMethod();
 			    Statement stmt=con.createStatement(); ResultSet rs=stmt.executeQuery(sql)) {
@@ -185,8 +208,19 @@ public class PostsClass  implements PostsDAO{
 				LOGGER.debug(posttype);
 				String caption=rs.getString("caption");
 				LOGGER.debug(caption);
-				String dateposted=rs.getString("date_posted");
-				LOGGER.debug(dateposted);
+				String datePosted=rs.getString("date_posted");
+				LOGGER.debug(datePosted);
+				
+				PostsClass p=new PostsClass();
+				p.setUserName(username);
+				p.setPostType(posttype);
+				p.setCaption(caption);
+				p.setDatePosted(datePosted);
+				
+				list.add(p);
+				
+				
+				
 			}
 		    
 		}
@@ -194,10 +228,11 @@ public class PostsClass  implements PostsDAO{
 		{
 			e.printStackTrace();
 		}		
-		return null;
+		return list;
 	}
 
-	public String[] displayFriendsPost(String req, String acp) {
+	public List<PostsClass> displayFriendsPost(String req, String acp) {
+		List<PostsClass> list = new ArrayList<PostsClass>();
 		String sql = "select * from posts where  email in (\r\n" + 
 	    		"select acceptor from friend_request where requestor = '"+req+"'and acceptor='"+acp+"' and current_status='accepted' )";
 		try(Connection con=ConnectionUtil.conMethod();
@@ -215,9 +250,19 @@ public class PostsClass  implements PostsDAO{
 						LOGGER.debug(posttype);
 						String caption=rs.getString("caption");
 						LOGGER.debug(caption);
-						String dateposted=rs.getString("date_posted");
+						 Date dateposted=rs.getDate("date_posted");
 						LOGGER.debug(dateposted); 
 				
+						
+						PostsClass p=new PostsClass();
+						p.setPostId(postId);
+						p.setEmail(email);
+						p.setPostType(posttype);
+						p.setCaption(caption);
+						p.setDatePosted(datePosted);
+						
+						list.add(p);
+						
 			}LOGGER.debug("You are still not accepted by your friend");
 		}
 		
@@ -225,11 +270,12 @@ public class PostsClass  implements PostsDAO{
 		{
 			e.printStackTrace();
 		}
-		return null;
+		return list;
 	}
 
 
-	public String[] displayPublicPost(String acp) {
+	public 	List<PostsClass> displayPublicPost(String acp) {
+		List<PostsClass> list = new ArrayList<PostsClass>();
 		String sql = "select * from posts where email='"+acp+"' and viewability='public'";
 		try(Connection con=ConnectionUtil.conMethod();
 			    Statement stmt=con.createStatement();
@@ -248,13 +294,22 @@ public class PostsClass  implements PostsDAO{
 						LOGGER.debug(caption);
 						String dateposted=rs.getString("date_posted");
 						LOGGER.debug(dateposted); 
+						
+						PostsClass p=new PostsClass();
+						p.setPostId(postId);
+						p.setEmail(email);
+						p.setPostType(posttype);
+						p.setCaption(caption);
+						p.setDatePosted(dateposted);
+						
+						list.add(p);
 				
 			}
 		}
 		catch(Exception e)
 		{
 			e.printStackTrace();
-		}		return null;
+		}		return list;
 	}
 
 	

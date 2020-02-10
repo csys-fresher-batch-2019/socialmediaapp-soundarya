@@ -10,6 +10,7 @@ public class LikesClass implements LikesDAO{
 	 private static final Logger LOGGER = Logger.getInstance();
 	 private int likePostId;
 	 private String likeEmail;
+	 private String likeDate;
 	
 	
 	
@@ -33,6 +34,13 @@ public class LikesClass implements LikesDAO{
 		this.likeEmail = likeEmail;
 	}
 
+	public String getLikeDate() {
+		return likeDate;
+	}
+
+	public void setLikeDate(String likeDate) {
+		this.likeDate = likeDate;
+	}
 
 	public static Logger getLogger() {
 		return LOGGER;
@@ -68,7 +76,7 @@ public class LikesClass implements LikesDAO{
 			
 			pst.setInt(1,likePostId);
 		   
-			ResultSet rs=pst.executeQuery();
+			ResultSet rs=pst.executeQuery(sql);
 			while(rs.next())
 			{
 				int count=rs.getInt("no_of_likes");
@@ -82,6 +90,8 @@ public class LikesClass implements LikesDAO{
 		
 		return 0;
 	}
+
+
 
 	
 

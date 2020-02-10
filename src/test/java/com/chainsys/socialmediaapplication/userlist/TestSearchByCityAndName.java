@@ -1,5 +1,7 @@
 package com.chainsys.socialmediaapplication.userlist;
 
+import java.util.List;
+
 import com.chainsys.socialmediaapplication.daoimpl.UserListClass;
 
 public class TestSearchByCityAndName {
@@ -8,6 +10,10 @@ public class TestSearchByCityAndName {
 		UserListClass sbycity = new UserListClass();
 		String a="a";
 		String city="madurai";
-		sbycity.searchByCityAndName(a,city);
+		
+		List<UserListClass> list = sbycity.searchByCityAndName(a,city);
+		for (UserListClass userListClass : list) {
+			System.out.println(userListClass.display1());
+		}
 	}
 }

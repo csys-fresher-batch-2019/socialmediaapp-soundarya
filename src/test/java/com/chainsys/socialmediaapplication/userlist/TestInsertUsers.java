@@ -1,6 +1,5 @@
 package com.chainsys.socialmediaapplication.userlist;
 
-import java.time.LocalDate;
 import java.util.Scanner;
 
 import com.chainsys.socialmediaapplication.daoimpl.Logger;
@@ -26,7 +25,7 @@ public class TestInsertUsers
 		insert.setGender(s.nextLine());
 		s.nextLine();
 		LOGGER.debug("Enter dob:");
-		insert.setDob(LocalDate.parse(s.nextLine()));
+		insert.setDob(java.sql.Date.valueOf((s.nextLine())));
 		s.nextLine();
 		LOGGER.debug("Enter city:");
 		insert.setCity(s.nextLine());
@@ -39,6 +38,8 @@ public class TestInsertUsers
 		s.nextLine();
 		LOGGER.debug("Enter Password:");
 		insert.setUserPassword(s.nextLine());
+		LOGGER.debug("Upload profile picture:");
+		insert.setProfilePic(s.nextLine());
 		insert.insertUsers(insert);
 	}
 
