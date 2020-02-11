@@ -274,9 +274,9 @@ public class PostsClass  implements PostsDAO{
 	}
 
 
-	public 	List<PostsClass> displayPublicPost(String acp) {
+	public 	List<PostsClass> displayPublicPost() {
 		List<PostsClass> list = new ArrayList<PostsClass>();
-		String sql = "select * from posts where email='"+acp+"' and viewability='public'";
+		String sql = "select * from posts where viewability='public'";
 		try(Connection con=ConnectionUtil.conMethod();
 			    Statement stmt=con.createStatement();
 			    

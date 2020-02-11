@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Scanner;
 
-import com.chainsys.socialmediaapplication.daoimpl.CommentsClass;
 import com.chainsys.socialmediaapplication.daoimpl.Logger;
 import com.chainsys.socialmediaapplication.daoimpl.UserListClass;
 
@@ -18,7 +17,7 @@ public class TestDisplayUSer {
 		String emailid=s.nextLine();
 		List<UserListClass> list = u.displayUser(emailid);
 		for (UserListClass userListClass : list) {
-			System.out.println(userListClass.display());
+			LOGGER.debug(userListClass.display());
 		}
 		}
 

@@ -22,6 +22,6 @@ public interface PostsDAO {
 	
 	public List<PostsClass> displayFriendsPost(String req,String acp);
 	
-	public List<PostsClass> displayPublicPost( String acp);
+	public List<PostsClass> displayPublicPost();
 
 }

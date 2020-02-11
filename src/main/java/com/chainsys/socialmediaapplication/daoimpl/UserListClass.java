@@ -152,24 +152,23 @@ public class UserListClass  implements UserListDAO {
 				+ userPassword + ", profilePic=" + profilePic + "]";
 	}
 	public String display() {
-		return "UserListClass [userId=" + userId + ",profilePic=\" + profilePic + userName=" + userName + ", email=" + email + ", age=" + age
+		return "UserListClass [userId=" + userId + ",profilePic=" + profilePic +", userName=" + userName + ", email=" + email + ", age=" + age
 				+ ", gender=" + gender + ", dob=" + dob + ", city=" + city + ", country=" + country + ", createdDate="
 				+ createdDate + ", status=" + status + ", activestatus=" + activestatus + "]";
 	}
 
 	public String display1() {
-		return "UserListClass [ userName=" + userName + ", email=" + email + ", age=" + age
+		return "UserListClass [ profilePic=" + profilePic +",userName=" + userName + ", email=" + email + ", age=" + age
 				+ ", gender=" + gender + "]";
 	}
 	
 
 	public int noOfUsers()
 	{
-		String sql = "select count(*) as total_count from user_list" ;
+		String sql = "select count(*) as total_count from user_list where active_status='active'" ;
 		int totalcount = 0;
 		try(Connection con=ConnectionUtil.conMethod();
 			    Statement stmt=con.createStatement();
-			    
 			    ResultSet rs=stmt.executeQuery(sql)) 
 		{
 			
@@ -390,7 +389,7 @@ public class UserListClass  implements UserListDAO {
 		}
 	}
 	public List<UserListClass> searchByCityAndName(String a,String city) {
-		String sql = "select user_name,email,age,gender from user_list where user_name like '"+a+"%' and city='"+city+"'";
+		String sql = "select profile_pic,user_name,email,age,gender from user_list where user_name like '"+a+"%' and city='"+city+"'";
 		List<UserListClass> list = new ArrayList<UserListClass>();
 		try(Connection con=ConnectionUtil.conMethod();
 			    Statement stmt=con.createStatement();
@@ -399,7 +398,7 @@ public class UserListClass  implements UserListDAO {
 			
 		    while(rs.next())
 			{
-		    	
+		    	String profilePic=rs.getString("profile_pic");
 				String userName=rs.getString("user_name");
 				LOGGER.debug(userName);
 				String email=rs.getString("email");
@@ -411,6 +410,7 @@ public class UserListClass  implements UserListDAO {
 				
 				UserListClass u=new UserListClass();
 				
+				u.setProfilePic(profilePic);
 				u.setUserName(userName);
 				u.setEmail(email);
 				u.setAge(age);

@@ -8,7 +8,7 @@ public class TestSearchByCityAndName {
 
 	public static void main(String[] args) {
 		UserListClass sbycity = new UserListClass();
-		String a="a";
+		String a="so";
 		String city="madurai";
 		
 		List<UserListClass> list = sbycity.searchByCityAndName(a,city);

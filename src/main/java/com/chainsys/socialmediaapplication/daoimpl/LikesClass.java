@@ -69,14 +69,13 @@ public class LikesClass implements LikesDAO{
 
 	public int noOfLikes(int likePostId) {
 		String sql = "select count(*) as no_of_likes from likes where like_post_id=?";
-		try(Connection con=ConnectionUtil.conMethod();PreparedStatement pst=con.prepareStatement(sql);) {
+		try(Connection con=ConnectionUtil.conMethod();PreparedStatement pst=con.prepareStatement(sql);ResultSet rs=pst.executeQuery(sql)) {
 			
 			
 			LOGGER.debug(sql);
 			
 			pst.setInt(1,likePostId);
 		   
-			ResultSet rs=pst.executeQuery(sql);
 			while(rs.next())
 			{
 				int count=rs.getInt("no_of_likes");
