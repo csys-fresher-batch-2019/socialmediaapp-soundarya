@@ -20,8 +20,8 @@ public interface PostsDAO {
     //select u.user_name,p.post_type,p.caption,p.date_posted from user_list u inner join posts p on u.email=p.email;
 	public List<PostsClass> display();
 	
-	public List<PostsClass> displayFriendsPost(String req,String acp);
+	public List<PostsClass> displayFriendsPost(String req);
 	
 	public List<PostsClass> displayPublicPost();
-
+	public List<PostsClass> displayFriendsPost1(String acp);
 }

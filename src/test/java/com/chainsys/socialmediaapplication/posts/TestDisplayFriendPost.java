@@ -15,11 +15,9 @@ public class TestDisplayFriendPost {
 		LOGGER.debug("Enter Requestor email:");
 		String requestor=s.nextLine();
 		s.nextLine();
-		LOGGER.debug("Enter Acceptor email:");
-		String acceptor=s.nextLine();
 		
 		
-		List<PostsClass> list = display.displayFriendsPost(requestor, acceptor);
+		List<PostsClass> list = display.displayFriendsPost(requestor);
 		
 		for (PostsClass postsClass : list) {
 			System.out.println(postsClass.toString2());

@@ -116,7 +116,7 @@ public class PostsClass  implements PostsDAO{
 	}
 	
 	public String toString1() {
-		return "PostsClass [userName=" + userName + ",  postType=" + postType
+		return "PostsClass [userName=" + userName + ",email=" + email + ",  postType=" + postType
 				+ ", caption=" + caption + ",  datePosted=" + datePosted + "]";
 	}
 
@@ -193,7 +193,7 @@ public class PostsClass  implements PostsDAO{
 
 	public List<PostsClass> display() {
 		List<PostsClass> list = new ArrayList<PostsClass>();
-		String sql = "select u.user_name,p.post_type,p.caption,p.date_posted from user_list u inner join posts p on u.email=p.email ";
+		String sql = "select u.user_name,p.email,p.post_type,p.caption,p.date_posted from user_list u inner join posts p on u.email=p.email ";
 		try(Connection con=ConnectionUtil.conMethod();
 			    Statement stmt=con.createStatement(); ResultSet rs=stmt.executeQuery(sql)) {
 			
@@ -204,6 +204,8 @@ public class PostsClass  implements PostsDAO{
 			{
 				String username=rs.getString("user_name");
 				LOGGER.debug(username);
+				String email=rs.getString("email");
+				LOGGER.debug(email);
 				String posttype=rs.getString("post_type");
 				LOGGER.debug(posttype);
 				String caption=rs.getString("caption");
@@ -213,6 +215,7 @@ public class PostsClass  implements PostsDAO{
 				
 				PostsClass p=new PostsClass();
 				p.setUserName(username);
+				p.setEmail(email);
 				p.setPostType(posttype);
 				p.setCaption(caption);
 				p.setDatePosted(datePosted);
@@ -231,10 +234,10 @@ public class PostsClass  implements PostsDAO{
 		return list;
 	}
 
-	public List<PostsClass> displayFriendsPost(String req, String acp) {
+	public List<PostsClass> displayFriendsPost(String req) {
 		List<PostsClass> list = new ArrayList<PostsClass>();
 		String sql = "select * from posts where  email in (\r\n" + 
-	    		"select acceptor from friend_request where requestor = '"+req+"'and acceptor='"+acp+"' and current_status='accepted' )";
+	    		"select acceptor from friend_request where requestor = '"+req+"' and current_status='accepted' )";
 		try(Connection con=ConnectionUtil.conMethod();
 			    Statement stmt=con.createStatement();
 			    
@@ -250,7 +253,7 @@ public class PostsClass  implements PostsDAO{
 						LOGGER.debug(posttype);
 						String caption=rs.getString("caption");
 						LOGGER.debug(caption);
-						 Date dateposted=rs.getDate("date_posted");
+						 String dateposted=rs.getString("date_posted");
 						LOGGER.debug(dateposted); 
 				
 						
@@ -259,7 +262,7 @@ public class PostsClass  implements PostsDAO{
 						p.setEmail(email);
 						p.setPostType(posttype);
 						p.setCaption(caption);
-						p.setDatePosted(datePosted);
+						p.setDatePosted(dateposted);
 						
 						list.add(p);
 						
@@ -272,11 +275,92 @@ public class PostsClass  implements PostsDAO{
 		}
 		return list;
 	}
-
+//*********************
+	public List<PostsClass> displayFriendsPost1(String req) {
+		List<PostsClass> list = new ArrayList<PostsClass>();
+		String sql = "select * from posts where  email in (\r\n" + 
+	    		"select requestor from friend_request where acceptor = '"+req+"' and current_status='accepted' )";
+		try(Connection con=ConnectionUtil.conMethod();
+			    Statement stmt=con.createStatement();
+			    
+			    ResultSet rs=stmt.executeQuery(sql)) {
+			
+		    while(rs.next())
+			{
+		    			int postId=rs.getInt("post_id");
+		    			LOGGER.debug(postId);		
+					 	String email=rs.getString("email");
+						LOGGER.debug(email);
+						String posttype=rs.getString("post_type");
+						LOGGER.debug(posttype);
+						String caption=rs.getString("caption");
+						LOGGER.debug(caption);
+						 String dateposted=rs.getString("date_posted");
+						LOGGER.debug(dateposted); 
+				
+						
+						PostsClass p=new PostsClass();
+						p.setPostId(postId);
+						p.setEmail(email);
+						p.setPostType(posttype);
+						p.setCaption(caption);
+						p.setDatePosted(dateposted);
+						
+						list.add(p);
+						
+			}LOGGER.debug("You are still not accepted by your friend");
+		}
+		
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		return list;
+	}
+	
+//***********************
 
 	public 	List<PostsClass> displayPublicPost() {
 		List<PostsClass> list = new ArrayList<PostsClass>();
 		String sql = "select * from posts where viewability='public'";
+		try(Connection con=ConnectionUtil.conMethod();
+			    Statement stmt=con.createStatement();
+			    
+			    ResultSet rs=stmt.executeQuery(sql);) {
+			
+		    while(rs.next())
+			{
+		    			int postId=rs.getInt("post_id");
+		    			LOGGER.debug(postId);		
+					 	String email=rs.getString("email");
+						LOGGER.debug(email);
+						String posttype=rs.getString("post_type");
+						LOGGER.debug(posttype);
+						String caption=rs.getString("caption");
+						LOGGER.debug(caption);
+						String dateposted=rs.getString("date_posted");
+						LOGGER.debug(dateposted); 
+						
+						PostsClass p=new PostsClass();
+						p.setPostId(postId);
+						p.setEmail(email);
+						p.setPostType(posttype);
+						p.setCaption(caption);
+						p.setDatePosted(dateposted);
+						
+						list.add(p);
+				
+			}
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}		return list;
+	}
+	
+	public 	List<PostsClass> MyPosts(String emailId) {
+		List<PostsClass> list = new ArrayList<PostsClass>();
+		String sql = "select * from posts where email='"+emailId+"'";
 		try(Connection con=ConnectionUtil.conMethod();
 			    Statement stmt=con.createStatement();
 			    
