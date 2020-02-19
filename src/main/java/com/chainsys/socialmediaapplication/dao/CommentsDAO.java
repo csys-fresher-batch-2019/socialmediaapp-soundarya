@@ -12,4 +12,6 @@ public interface CommentsDAO {
 				//and p.post_id=c.cmt_post_id;
 		
 		public String[] displayPostsWithComments();
+		public int noOfComments(int cmtPostId) ;
+
 }

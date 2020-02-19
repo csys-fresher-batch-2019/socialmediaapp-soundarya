@@ -389,7 +389,7 @@ public class UserListClass  implements UserListDAO {
 		}
 	}
 	public List<UserListClass> searchByCityAndName(String a,String city) {
-		String sql = "select profile_pic,user_name,email,age,gender from user_list where user_name like '"+a+"%' and city='"+city+"'";
+		String sql = "select profile_pic,user_name,email,age,gender from user_list where lower(user_name) like lower('"+a+"%') and lower(city)=lower('"+city+"')";
 		List<UserListClass> list = new ArrayList<UserListClass>();
 		try(Connection con=ConnectionUtil.conMethod();
 			    Statement stmt=con.createStatement();

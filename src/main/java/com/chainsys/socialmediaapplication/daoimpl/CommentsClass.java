@@ -167,7 +167,34 @@ public class CommentsClass {
 	}
 
 
-	
+	public int noOfComments(int cmtPostId) {
+		System.out.println(cmtPostId);
+		String sql = "select count(*) as no_of_comments from comments where cmt_post_id=?" ;
+		int totalcount = 0;
+		try(Connection con=ConnectionUtil.conMethod();
+				PreparedStatement pst=con.prepareStatement(sql))
+		{
+		pst.setInt(1,cmtPostId);
+				
+			try(    ResultSet rs=pst.executeQuery()) 
+		{
+			
+		    if(rs.next())
+			{
+				totalcount=rs.getInt("no_of_comments");
+				LOGGER.debug("Total Comments:" + totalcount);
+			}
+		}
+	    catch(Exception e)
+	    {
+	    	e.printStackTrace();
+	    }
+		}catch (Exception e) {
+			// TODO: handle exception
+		}
+		return totalcount;
+	}
+
 
 
 	

@@ -3,6 +3,8 @@ package com.chainsys.socialmediaapplication.daoimpl;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Statement;
+
 import com.chainsys.socialmediaapplication.dao.LikesDAO;
 import com.chainsys.socialmediaapplication.util.ConnectionUtil;
 
@@ -67,18 +69,19 @@ public class LikesClass implements LikesDAO{
 	}
 
 
-	public int noOfLikes(int likePostId) {
+	/*public int noOfLikes(int likePostId) {
 		String sql = "select count(*) as no_of_likes from likes where like_post_id=?";
-		try(Connection con=ConnectionUtil.conMethod();PreparedStatement pst=con.prepareStatement(sql);ResultSet rs=pst.executeQuery(sql)) {
+		int count=0;
+		try(Connection con=ConnectionUtil.conMethod();PreparedStatement pst=con.prepareStatement(sql);ResultSet rs=pst.executeQuery()) {
 			
 			
 			LOGGER.debug(sql);
 			
 			pst.setInt(1,likePostId);
 		   
-			while(rs.next())
+			if(rs.next())
 			{
-				int count=rs.getInt("no_of_likes");
+				count=rs.getInt("no_of_likes");
 				LOGGER.debug("No of likes :"+count);
 			}
 		}
@@ -87,8 +90,39 @@ public class LikesClass implements LikesDAO{
 			e.printStackTrace();
 		}
 		
-		return 0;
+		return count;
+	}*/
+	
+	
+	
+
+	@Override
+	public int noOfLikes(int likePostId) {
+		System.out.println(likePostId);
+		String sql = "select count(*) as no_of_likes from likes where like_post_id=?" ;
+		int totalcount = 0;
+		try(Connection con=ConnectionUtil.conMethod();
+				PreparedStatement pst=con.prepareStatement(sql);)
+		{
+			pst.setInt(1, likePostId);
+
+			try (ResultSet rs = pst.executeQuery())
+			{
+				if (rs.next()) {
+					totalcount = rs.getInt("no_of_likes");
+					LOGGER.debug("Total :" + totalcount);
+				}
+			} 
+			catch (Exception e) 
+			{
+				e.printStackTrace();
+			}
+		}catch (Exception e) {
+			// TODO: handle exception
+		}
+		return totalcount;
 	}
+
 
 
 
