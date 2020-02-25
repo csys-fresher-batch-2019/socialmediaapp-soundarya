@@ -1,6 +1,9 @@
 package com.chainsys.socialmediaapplication.dao;
 
+import java.util.List;
+
 import com.chainsys.socialmediaapplication.daoimpl.CommentsClass;
+import com.chainsys.socialmediaapplication.daoimpl.LikesClass;
 
 public interface CommentsDAO {
 	//posting comments
@@ -13,5 +16,6 @@ public interface CommentsDAO {
 		
 		public String[] displayPostsWithComments();
 		public int noOfComments(int cmtPostId) ;
+		public List<LikesClass> displayComments(LikesClass l);
 
 }

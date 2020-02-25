@@ -170,13 +170,13 @@ public class PostsClass  implements PostsDAO{
 
 	public void addPosts(PostsClass add) {
 		
-		String sql = "insert into posts (post_id,email,post_type,caption,viewability,date_posted) values (po_id_se.nextval,?,?,?,?,current_timestamp)";
+		String sql = "insert into posts (post_id,email,post_type,caption,viewability,date_posted) values (pos_id_se.nextval,?,?,?,?,current_timestamp)";
 		try (Connection con=ConnectionUtil.conMethod();PreparedStatement pst =con.prepareStatement(sql);)
 		{
 			
 			LOGGER.debug(sql);
 			
-			//pst.setInt(1, postId);
+			
 			pst.setString(1,add.email);
 			pst.setString(2,add.postType);
 			pst.setString(3,add.caption);
@@ -394,6 +394,26 @@ public class PostsClass  implements PostsDAO{
 		{
 			e.printStackTrace();
 		}		return list;
+	}
+
+	@Override
+	public void deletePost(PostsClass d) {
+		String sql = "delete from posts where post_id=?";
+    	try (Connection con=ConnectionUtil.conMethod();
+    		  PreparedStatement pst =con.prepareStatement(sql)){
+			
+		   
+		    LOGGER.debug(sql);
+		    pst.setInt(1,d.getPostId());
+		    int rows=pst.executeUpdate();
+		    LOGGER.debug(rows +"updated");
+		    
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		
 	}
 
 	

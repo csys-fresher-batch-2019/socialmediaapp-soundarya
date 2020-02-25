@@ -91,7 +91,9 @@ public class CommentsClass {
 		return "CommentsClass [userName=" + userName + ", caption=" + caption 
 				+ ", cmtEmail=" + cmtEmail + ", cmts=" + cmts + ", cmtDate1=" + cmtDate1 + "]";
 	}
-	
+	public String toString2() {
+		return "CommentsClass [cmtEmail=" + cmtEmail + ", cmts=" + cmts + ", cmtDate1=" + cmtDate1 + "]";
+	}
 	
 	public void insertComments(CommentsClass ins)
 	{
@@ -193,6 +195,36 @@ public class CommentsClass {
 			// TODO: handle exception
 		}
 		return totalcount;
+	}
+
+	public List<CommentsClass> displayComments(CommentsClass l) {
+		List<CommentsClass> list = new ArrayList<CommentsClass>();
+		String sql = "select cmt_email,cmt_date,cmts from comments where cmt_post_id=?" ;
+		try(Connection con=ConnectionUtil.conMethod();
+				PreparedStatement pst =con.prepareStatement(sql)) {
+			
+			LOGGER.debug(sql);
+			pst.setInt(1, l.getCmtPostId());
+			ResultSet rs=pst.executeQuery();
+			while(rs.next())
+			{
+		    	
+				String email=rs.getString("cmt_email");
+				String cmt=rs.getString("cmts");
+				String date=rs.getString("cmt_date");
+				LikesClass l1=new LikesClass();
+				l.setCmtEmail(email);
+				l.setCmts(cmt);
+				l.setCmtDate(date);
+				
+				list.add(l);
+			}
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+			return list;
 	}
 
 

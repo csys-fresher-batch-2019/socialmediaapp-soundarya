@@ -342,7 +342,7 @@ public class UserListClass  implements UserListDAO {
 		
 	}
 	public String userLogin(String email, String password) {
-		String sql = "select email,user_password from user_list where email='"+email+"'";
+		String sql = "select email,user_password from user_list where email='"+email+"' and user_password='"+password+"'";
 		try(Connection con=ConnectionUtil.conMethod();
 			    Statement stmt=con.createStatement();ResultSet rs=stmt.executeQuery(sql)){
 			
@@ -430,7 +430,7 @@ public class UserListClass  implements UserListDAO {
 	}
 
 	public void insertUsers(UserListClass insert) {
-		String sql = "insert into user_list(user_id,user_name,email,age,gender,dob,city,country,created_date,status,user_password,profile_pic) values (u_id_s.nextval,?,?,?,?,?,?,?,current_timestamp,?,?,?)";
+		String sql = "insert into user_list(user_id,user_name,email,age,gender,dob,city,country,created_date,status,user_password,profile_pic) values (us_id_s.nextval,?,?,?,?,?,?,?,current_timestamp,?,?,?)";
 		try(Connection con=ConnectionUtil.conMethod();PreparedStatement pst=con.prepareStatement(sql)) {
 			
 			

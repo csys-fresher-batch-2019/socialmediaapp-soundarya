@@ -28,7 +28,7 @@ public class LoginClass {
 	
 	
 	public String adminLogin(String email1, String password1) {
-		String sql = "select login_email,login_password from login where login_email='"+email1+"'";
+		String sql = "select login_email,login_password from login where login_email='"+email1+"' and login_password='"+password1+"'";
 		try(Connection con=ConnectionUtil.conMethod();
 			    Statement stmt=con.createStatement();ResultSet rs=stmt.executeQuery(sql)){
 			

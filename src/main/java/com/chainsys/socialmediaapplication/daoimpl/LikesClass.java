@@ -1,9 +1,12 @@
 package com.chainsys.socialmediaapplication.daoimpl;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.chainsys.socialmediaapplication.dao.LikesDAO;
 import com.chainsys.socialmediaapplication.util.ConnectionUtil;
@@ -16,6 +19,12 @@ public class LikesClass implements LikesDAO{
 	
 	
 	
+
+	@Override
+	public String toString() {
+		return "LikesClass [likeEmail=" + likeEmail + ", likeDate=" + likeDate + "]";
+	}
+
 
 	public int getLikePostId() {
 		return likePostId;
@@ -69,33 +78,7 @@ public class LikesClass implements LikesDAO{
 	}
 
 
-	/*public int noOfLikes(int likePostId) {
-		String sql = "select count(*) as no_of_likes from likes where like_post_id=?";
-		int count=0;
-		try(Connection con=ConnectionUtil.conMethod();PreparedStatement pst=con.prepareStatement(sql);ResultSet rs=pst.executeQuery()) {
-			
-			
-			LOGGER.debug(sql);
-			
-			pst.setInt(1,likePostId);
-		   
-			if(rs.next())
-			{
-				count=rs.getInt("no_of_likes");
-				LOGGER.debug("No of likes :"+count);
-			}
-		}
-		catch(Exception e)
-		{
-			e.printStackTrace();
-		}
-		
-		return count;
-	}*/
 	
-	
-	
-
 	@Override
 	public int noOfLikes(int likePostId) {
 		System.out.println(likePostId);
@@ -121,6 +104,36 @@ public class LikesClass implements LikesDAO{
 			// TODO: handle exception
 		}
 		return totalcount;
+	}
+
+
+	@Override
+	public List<LikesClass> displayLikes(LikesClass l) {
+		List<LikesClass> list = new ArrayList<LikesClass>();
+		String sql = "select like_email,like_date from likes where like_post_id=?" ;
+		try(Connection con=ConnectionUtil.conMethod();
+				PreparedStatement pst =con.prepareStatement(sql)) {
+			
+			LOGGER.debug(sql);
+			pst.setInt(1, l.getLikePostId());
+			ResultSet rs=pst.executeQuery();
+			while(rs.next())
+			{
+		    	
+				String email=rs.getString("like_email");
+				String date=rs.getString("like_date");
+				LikesClass l1=new LikesClass();
+				l1.setLikeEmail(email);
+				l1.setLikeDate(date);
+				
+				list.add(l1);
+			}
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+			return list;
 	}
 
 

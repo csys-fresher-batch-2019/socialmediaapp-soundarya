@@ -26,4 +26,6 @@ public interface PostsDAO {
 	
 	public List<PostsClass> displayPublicPost();
 	public List<PostsClass> displayFriendsPost1(String acp);
+	
+	public void deletePost(PostsClass d);
 }
